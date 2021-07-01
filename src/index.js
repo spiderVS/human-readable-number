@@ -1,36 +1,53 @@
 module.exports = function toReadable (number) {
 
-    let n = number;
-    Arr_1to19 = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen' ];
+  const ones = {
+    1: 'one',
+    2: 'two',
+    3: 'three',
+    4: 'four',
+    5: 'five',
+    6: 'six',
+    7: 'seven',
+    8: 'eight',
+    9: 'nine',
+    10: 'ten',
+    11: 'eleven',
+    12: 'twelve',
+    13: 'thirteen',
+    14: 'fourteen',
+    15: 'fifteen',
+    16: 'sixteen',
+    17: 'seventeen',
+    18: 'eighteen',
+    19: 'nineteen'
+  };
 
-    Arr_tens = ['ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  const dozens = {
+    2: 'twenty',
+    3: 'thirty',
+    4: 'forty',
+    5: 'fifty',
+    6: 'sixty',
+    7: 'seventy',
+    8: 'eighty',
+    9: 'ninety'
+  };
 
-    Arr_hundreds = ['hundred'];
+  let outStr = '';
 
-    if (n == 0) {
-        Readable_N = 'zero';
-    }
-
-    if (n < 20 && n > 0) {
-        Readable_N = Arr_1to19[n-1];
-    }
-    
-    if ((n >= 20 && n < 100) && (n % 10 !=0)) {
-        Readable_N = Arr_tens [Math.floor(n/10) - 1] + ' ' + Arr_1to19 [(n % 10) - 1];
-    } else if ((n >= 20 && n < 100) && (n % 10 == 0)) {
-        Readable_N = Arr_tens [n/10 - 1];
-        }
-
-    if (n >= 100 && n <= 999) {
-        Readable_N = Arr_1to19[Math.floor(n/100) - 1] + ' ' + Arr_hundreds[0]; // + ' ' + Arr_tens[(number % 100) - 1];
-        if ((n % 100) < 20 && (n % 100) > 0) {
-           Readable_N += ' ' + Arr_1to19[n % 100 - 1]; 
-        } else if ((n % 100) >= 20 && (n % 100) < 100 && ((n % 10) != 0)) {
-            Readable_N += ' ' + Arr_tens [(Math.floor((n % 100)/10)) - 1] + ' ' + Arr_1to19 [((n % 100) % 10) - 1];
-            } else if ((n % 100) >= 20 && (n % 100) < 100) {
-                Readable_N += ' ' + Arr_tens [(n % 100)/10 - 1]
-            }      
-    }
-    return Readable_N;  
-    //console.log(Readable_N);  
+  if (number === 0) return 'zero';
+  if (number < 1000 && number > 99) {
+    outStr += ones[(number - (number % 100)) / 100] + ' hundred';
+    number = number % 100;
+    if (number > 0) outStr += ' ';
+  }
+  if (number < 100 && number > 19) {
+    outStr += dozens[(number - (number % 10)) / 10];
+    number = number % 10;
+    if (number > 0) outStr += ' ';
+  }
+  if (number < 20 && number > 0) {
+    outStr += ones[number];
+  }
+  return outStr;
 }
